@@ -1,0 +1,180 @@
+.logo-banner-section {
+  padding: 60px 32px;
+  background-color: var(--color-beige-light);
+  overflow: hidden;
+  position: relative;
+}
+
+.logo-banner-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.logo-banner-track {
+  display: flex;
+  gap: 60px;
+  animation: scroll 30s linear infinite;
+  width: fit-content;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.logo-item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  white-space: nowrap;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.logo-item:hover .logo-content {
+  opacity: 1;
+}
+
+.government-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.emblem {
+  font-size: 32px;
+  flex-shrink: 0;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hindi-text {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.english-text {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.company-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.company-logo.cursive {
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 24px;
+  font-weight: 400;
+}
+
+.logo-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+
+.logo-name {
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: lowercase;
+}
+
+.logo-subtitle {
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+.infosys {
+  font-size: 20px;
+  font-weight: 600;
+  position: relative;
+}
+
+.infosys::first-letter {
+  font-size: 16px;
+  vertical-align: super;
+}
+
+.aadhaar-icon {
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.company-logo .logo-text {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Pause animation on hover */
+.logo-banner-container:hover .logo-banner-track {
+  animation-play-state: paused;
+}
+
+@media (max-width: 768px) {
+  .logo-banner-section {
+    padding: 40px 20px;
+  }
+
+  .logo-banner-track {
+    gap: 40px;
+    animation-duration: 20s;
+  }
+
+  .logo-content {
+    font-size: 12px;
+  }
+
+  .emblem {
+    font-size: 24px;
+  }
+
+  .hindi-text {
+    font-size: 10px;
+  }
+
+  .english-text {
+    font-size: 9px;
+  }
+
+  .logo-name {
+    font-size: 16px;
+  }
+
+  .logo-subtitle {
+    font-size: 9px;
+  }
+
+  .company-logo .logo-text {
+    font-size: 16px;
+  }
+}
+

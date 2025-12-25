@@ -1,0 +1,11 @@
+export { default as Banner } from './Banner/Banner'
+export { default as Header } from './Header/Header'
+export { default as LanguageSwitcher } from './LanguageSwitcher/LanguageSwitcher'
+export { default as Hero } from './Hero/Hero'
+export { default as ValueProposition } from './ValueProposition/ValueProposition'
+export { default as Features } from './Features/Features'
+export { default as ProblemSection } from './ProblemSection/ProblemSection'
+export { default as ImpactSection } from './ImpactSection/ImpactSection'
+export { default as CTASection } from './CTASection/CTASection'
+export { default as Footer } from './Footer/Footer'
+

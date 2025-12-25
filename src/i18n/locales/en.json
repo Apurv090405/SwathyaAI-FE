@@ -1,0 +1,130 @@
+{
+  "nav": {
+    "products": "Products",
+    "about": "About",
+    "blog": "Blog",
+    "careers": "Careers",
+    "api": "API Platform",
+    "requestDemo": "Request a Demo"
+  },
+  "banner": {
+    "text": "Introducing SwasthyaAI - Smart Voice Health Assistant for India"
+  },
+  "hero": {
+    "title": "Healthcare Access for Every Indian",
+    "subtitle": "A voice-first, AI-powered health assistant accessible via any phone, in any language, at zero cost",
+    "cta1": "Get Started",
+    "cta2": "Learn More"
+  },
+  "valueProp": {
+    "title": "Building India's Healthcare Access Ecosystem",
+    "subtitle": "SwasthyaAI is transforming healthcare accessibility across India, bringing quality medical guidance to millions through voice-first AI technology.",
+    "button": "LEARN MORE",
+    "formula": "ANY PHONE + ANY LANGUAGE + ZERO COST = IMMEDIATE HEALTHCARE ACCESS",
+    "description": "Break down barriers. Access quality healthcare guidance instantly, regardless of your location, device, or language."
+  },
+  "features": {
+    "title": "Why SwasthyaAI?",
+    "subtitle": "Built for India, by India",
+    "voiceFirst": {
+      "title": "Voice-First Interface",
+      "description": "Access via any phone - no smartphone or internet required. Toll-free number works on basic feature phones."
+    },
+    "multilingual": {
+      "title": "12+ Languages",
+      "description": "Speak in your language. Automatic language detection supports Hindi, Gujarati, Tamil, Marathi, and more."
+    },
+    "aiTriage": {
+      "title": "AI-Powered Triage",
+      "description": "Intelligent risk assessment guides you to the right care - self-care, PHC referral, or immediate doctor connection."
+    },
+    "zeroCost": {
+      "title": "Completely Free",
+      "description": "No charges, no hidden fees. Healthcare guidance should be accessible to everyone, everywhere."
+    },
+    "ruralFocus": {
+      "title": "Built for Rural India",
+      "description": "Designed specifically to address the healthcare crisis affecting 65% of India's population in rural areas."
+    },
+    "doctorConnect": {
+      "title": "Seamless Doctor Connection",
+      "description": "When needed, get instantly connected to verified doctors for teleconsultation or emergency care."
+    }
+  },
+  "problem": {
+    "title": "The Healthcare Crisis in Rural India",
+    "description": "Over 900 million people face severe healthcare accessibility challenges",
+    "stats": {
+      "doctorRatio": "Only 1 doctor per 10,000 people",
+      "phcStaffing": "PHCs operate at 30-40% capacity",
+      "distance": "Average 15-20 km to nearest PHC",
+      "connectivity": "Only 31% smartphone penetration"
+    }
+  },
+  "solution": {
+    "title": "Our Solution",
+    "description": "SwasthyaAI bridges the gap between rural communities and quality healthcare",
+    "points": [
+      "Toll-free access from any phone",
+      "Clinical triage and risk assessment",
+      "Multi-agent AI system for comprehensive care",
+      "Actionable guidance and PHC referrals",
+      "Follow-up monitoring and support"
+    ]
+  },
+  "statistics": {
+    "totalCalls": {
+      "label": "CALLS",
+      "value": "2.3M+",
+      "description": "Total calls processed"
+    },
+    "criticalCases": {
+      "label": "CRITICAL CASES",
+      "value": "112K+",
+      "description": "Critical cases handled"
+    },
+    "activeDoctors": {
+      "label": "DOCTORS",
+      "value": "11.8K",
+      "description": "Active doctors connected"
+    },
+    "savedCosts": {
+      "value": "₹300K+",
+      "description": "Saved in healthcare costs"
+    },
+    "responseTime": {
+      "value": "3x",
+      "description": "Faster than traditional triage"
+    }
+  },
+  "impact": {
+    "title": "Transforming Healthcare Access",
+    "subtitle": "Empowering communities across India",
+    "patients": {
+      "title": "For Patients",
+      "description": "Instant access to health guidance, reduced travel costs, native language support"
+    },
+    "doctors": {
+      "title": "For Doctors",
+      "description": "Pre-triaged patients, complete case history, focus on complex cases"
+    },
+    "communities": {
+      "title": "For Communities",
+      "description": "Real-time health insights, disease surveillance, better resource allocation"
+    }
+  },
+  "cta": {
+    "title": "Ready to Transform Healthcare?",
+    "subtitle": "Join us in making quality healthcare accessible to every Indian",
+    "button": "Get Started Today"
+  },
+  "footer": {
+    "tagline": "Healthcare for India starts here",
+    "products": "Products",
+    "company": "Company",
+    "resources": "Resources",
+    "legal": "Legal",
+    "copyright": "2025 SwasthyaAI. All rights reserved."
+  }
+}
+
