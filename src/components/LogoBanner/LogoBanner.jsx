@@ -1,7 +1,12 @@
-import React from 'react'
+import React, { useRef } from 'react'
+import { useGSAP } from '@gsap/react'
+import { gsap, ScrollTrigger } from '../../utils/gsapConfig'
 import './LogoBanner.css'
 
 const LogoBanner = () => {
+  const sectionRef = useRef(null)
+  const trackRef = useRef(null)
+
   const logos = [
     {
       name: 'Ministry of Skill Development',
@@ -35,10 +40,37 @@ const LogoBanner = () => {
   // Duplicate logos for seamless infinite scroll
   const duplicatedLogos = [...logos, ...logos]
 
+  useGSAP(() => {
+    // Fade in the section
+    gsap.from(sectionRef.current, {
+      opacity: 0,
+      y: 30,
+      duration: 0.8,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      }
+    })
+
+    // Speed up animation on scroll
+    gsap.to(trackRef.current, {
+      '--animation-speed': '15s',
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top center',
+        end: 'bottom center',
+        scrub: 1
+      }
+    })
+
+  }, { scope: sectionRef })
+
   return (
-    <section className="logo-banner-section">
+    <section className="logo-banner-section" ref={sectionRef}>
       <div className="logo-banner-container">
-        <div className="logo-banner-track">
+        <div className="logo-banner-track" ref={trackRef}>
           {duplicatedLogos.map((logo, index) => (
             <div key={index} className="logo-item">
               {logo.type === 'government' && logo.name === 'Ministry of Skill Development' ? (

@@ -1,10 +1,15 @@
 import React, { useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useGSAP } from '@gsap/react'
+import { gsap, ScrollTrigger } from '../../utils/gsapConfig'
 import './Features.css'
 
 const Features = () => {
   const { t } = useTranslation()
   const videoRefs = useRef([])
+  const sectionRef = useRef(null)
+  const headerRef = useRef(null)
+  const cardsRef = useRef([])
 
   const features = [
     {
@@ -46,14 +51,65 @@ const Features = () => {
     })
   }, [])
 
+  useGSAP(() => {
+    // Animate header
+    gsap.from(headerRef.current, {
+      opacity: 0,
+      y: 50,
+      duration: 0.8,
+      scrollTrigger: {
+        trigger: headerRef.current,
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      }
+    })
+
+    // Animate cards with stagger
+    cardsRef.current.forEach((card, index) => {
+      gsap.from(card, {
+        opacity: 0,
+        y: 80,
+        scale: 0.95,
+        duration: 0.8,
+        delay: index * 0.15,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      })
+
+      // Add hover animation
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, {
+          scale: 1.02,
+          y: -5,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+      })
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          scale: 1,
+          y: 0,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+      })
+    })
+
+  }, { scope: sectionRef })
+
   return (
-    <section className="features" id="products">
+    <section className="features" id="products" ref={sectionRef}>
       <div className="features-container">
-        <div className="features-header">
+        <div className="features-header" ref={headerRef}>
           <h2 className="features-title">{t('features.title')}</h2>
           <p className="features-subtitle">{t('features.subtitle')}</p>
         </div>
-        
+
         <div className="features-grid">
           {features.map((feature, index) => {
             const rotations = [
@@ -64,11 +120,15 @@ const Features = () => {
             ]
             const transform = rotations[index]
             return (
-              <div key={feature.key} className="feature-card">
+              <div
+                key={feature.key}
+                className="feature-card"
+                ref={el => cardsRef.current[index] = el}
+              >
                 <div className="feature-video-container">
-                  <video 
+                  <video
                     ref={el => videoRefs.current[index] = el}
-                    src="/videos/whyweare.mp4" 
+                    src="/videos/whyweare.mp4"
                     loop
                     muted
                     playsInline

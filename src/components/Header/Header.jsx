@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useGSAP } from '@gsap/react'
+import { gsap, ScrollTrigger } from '../../utils/gsapConfig'
 import LanguageSwitcher from '../LanguageSwitcher/LanguageSwitcher'
 import './Header.css'
 
@@ -7,6 +9,8 @@ const Header = () => {
   const { t } = useTranslation()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState(null)
+  const headerRef = useRef(null)
+  const lastScrollY = useRef(0)
 
   const handleDropdownToggle = (dropdown) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown)
@@ -16,27 +20,79 @@ const Header = () => {
     setActiveDropdown(null)
   }
 
+  useGSAP(() => {
+    // Header slides down on load
+    gsap.fromTo(headerRef.current,
+      { y: -100, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out', delay: 0.1 }
+    )
+
+    // Animate nav links with stagger - use querySelectorAll within scope
+    const navLinks = headerRef.current.querySelectorAll('.nav-link, .nav-item-wrapper')
+    gsap.fromTo(navLinks,
+      { opacity: 0, y: -20 },
+      { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power2.out', delay: 0.4 }
+    )
+
+  }, { scope: headerRef })
+
+  // Smart header hide/show on scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+      const header = headerRef.current
+
+      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
+        // Scrolling down - hide header
+        gsap.to(header, {
+          y: -100,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+      } else {
+        // Scrolling up - show header
+        gsap.to(header, {
+          y: 0,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+      }
+
+      // Add shadow when scrolled
+      if (currentScrollY > 50) {
+        header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)'
+      } else {
+        header.style.boxShadow = 'none'
+      }
+
+      lastScrollY.current = currentScrollY
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
   return (
-    <header className="header">
+    <header className="header" ref={headerRef}>
       <div className="header-container">
         <div className="logo">
           <div className="logo-circle">
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="20" cy="20" r="18" stroke="#000" strokeWidth="3" fill="none"/>
-              <circle cx="20" cy="20" r="12" stroke="#000" strokeWidth="2" fill="none"/>
-              <circle cx="20" cy="20" r="6" fill="#000"/>
-              <circle cx="20" cy="20" r="2" fill="#000"/>
+              <circle cx="20" cy="20" r="18" stroke="#000" strokeWidth="3" fill="none" />
+              <circle cx="20" cy="20" r="12" stroke="#000" strokeWidth="2" fill="none" />
+              <circle cx="20" cy="20" r="6" fill="#000" />
+              <circle cx="20" cy="20" r="2" fill="#000" />
             </svg>
           </div>
         </div>
-        
+
         <div className="nav-wrapper">
-          <nav 
+          <nav
             className={`nav ${isMenuOpen ? 'nav-open' : ''}`}
             onMouseLeave={handleMouseLeave}
           >
             <div className="nav-item-wrapper">
-              <button 
+              <button
                 className="nav-link nav-link-button"
                 onClick={() => handleDropdownToggle('products')}
                 onMouseEnter={() => setActiveDropdown('products')}
@@ -45,42 +101,20 @@ const Header = () => {
                 <span className="chevron">{activeDropdown === 'products' ? '▲' : '▼'}</span>
               </button>
               {activeDropdown === 'products' && (
-                <div className="dropdown-menu products-dropdown">
+                <div className="dropdown-menu">
                   <div className="dropdown-content">
-                    <div className="dropdown-categories">
-                      <button className="category-item active">• Voice Assistant</button>
-                      <button className="category-item">AI Triage</button>
-                      <button className="category-item">Teleconsult</button>
-                    </div>
-                    <div className="dropdown-services">
-                      <div className="service-column">
-                        <a href="#voice-dev" className="service-link">AI Voice Agent</a>
-                        <a href="#mcp-server" className="service-link">MCP Server</a>
-                        <a href="#hire-ai" className="service-link">Hire AI Developer</a>
-                      </div>
-                      <div className="service-column">
-                        <a href="#ai-consult" className="service-link">AI Consultation</a>
-                        <a href="#llm" className="service-link">Large Language Model</a>
-                        <a href="#visual-analysis" className="service-link">Visual Analysis</a>
-                      </div>
-                      <div className="service-column">
-                        <a href="#chatbot" className="service-link">AI Chatbot</a>
-                        <a href="#nlp" className="service-link">Natural Language Processing</a>
-                        <a href="#deep-learning" className="service-link">Deep Learning</a>
-                      </div>
-                      <div className="service-column">
-                        <a href="#generative-ai" className="service-link">Generative AI</a>
-                        <a href="#predictive" className="service-link">Predictive Modelling</a>
-                        <a href="#clinical-triage" className="service-link">Clinical Triage</a>
-                      </div>
-                    </div>
+                    <a href="#voice-assistant" className="dropdown-link">Voice Assistant</a>
+                    <a href="#ai-triage" className="dropdown-link">AI Triage</a>
+                    <a href="#teleconsult" className="dropdown-link">Teleconsult</a>
+                    <a href="#ai-chatbot" className="dropdown-link">AI Chatbot</a>
+                    <a href="#analytics" className="dropdown-link">Analytics Dashboard</a>
                   </div>
                 </div>
               )}
             </div>
 
             <div className="nav-item-wrapper">
-              <button 
+              <button
                 className="nav-link nav-link-button"
                 onClick={() => handleDropdownToggle('company')}
                 onMouseEnter={() => setActiveDropdown('company')}
@@ -89,7 +123,7 @@ const Header = () => {
                 <span className="chevron">{activeDropdown === 'company' ? '▲' : '▼'}</span>
               </button>
               {activeDropdown === 'company' && (
-                <div className="dropdown-menu company-dropdown">
+                <div className="dropdown-menu">
                   <div className="dropdown-content">
                     <a href="#about-us" className="dropdown-link">About Us</a>
                     <a href="#team" className="dropdown-link">Our Team</a>
@@ -104,23 +138,19 @@ const Header = () => {
               {t('nav.blog')}
             </a>
 
-            <a href="#careers" className="nav-link nav-link-button">
-              {t('nav.careers')}
-            </a>
+            <LanguageSwitcher />
 
-            <a href="#api" className="nav-link nav-link-button">
-              {t('nav.api')}
+            <a href="#signin" className="nav-link nav-link-login">
+              Login
             </a>
 
             <a href="#demo" className="nav-link nav-link-cta">
               {t('nav.requestDemo')}
               <span className="arrow-icon">↗</span>
             </a>
-
-            <LanguageSwitcher />
           </nav>
 
-          <button 
+          <button
             className="mobile-menu-toggle"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Toggle menu"

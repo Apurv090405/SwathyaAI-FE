@@ -1,10 +1,16 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
+import { useGSAP } from '@gsap/react'
+import { gsap, ScrollTrigger } from '../../utils/gsapConfig'
 import './ImpactSection.css'
 
 const ImpactSection = () => {
   const { t } = useTranslation()
   const [billingCycle, setBillingCycle] = useState('monthly') // 'monthly' or 'yearly'
+  const sectionRef = useRef(null)
+  const headerRef = useRef(null)
+  const cardsRef = useRef([])
+  const toggleRef = useRef(null)
 
   const plans = [
     {
@@ -59,37 +65,127 @@ const ImpactSection = () => {
     return discounted.toFixed(2)
   }
 
+  const handleBillingToggle = (cycle) => {
+    setBillingCycle(cycle)
+    // Animate price change
+    gsap.from('.price', {
+      scale: 1.2,
+      duration: 0.3,
+      ease: 'back.out(1.7)'
+    })
+  }
+
+  useGSAP(() => {
+    // Animate header
+    gsap.from(headerRef.current.children, {
+      opacity: 0,
+      y: 40,
+      duration: 0.8,
+      stagger: 0.15,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: headerRef.current,
+        start: 'top 80%',
+        toggleActions: 'play none none reverse'
+      }
+    })
+
+    // Animate toggle
+    gsap.from(toggleRef.current, {
+      opacity: 0,
+      y: 20,
+      duration: 0.6,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: toggleRef.current,
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      }
+    })
+
+    // Animate pricing cards
+    cardsRef.current.forEach((card, index) => {
+      gsap.from(card, {
+        opacity: 0,
+        y: 80,
+        rotateX: 15,
+        scale: 0.9,
+        duration: 0.8,
+        delay: index * 0.2,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: card,
+          start: 'top 85%',
+          toggleActions: 'play none none reverse'
+        }
+      })
+
+      // Hover animation
+      card.addEventListener('mouseenter', () => {
+        gsap.to(card, {
+          y: -10,
+          scale: 1.02,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+      })
+
+      card.addEventListener('mouseleave', () => {
+        gsap.to(card, {
+          y: 0,
+          scale: 1,
+          duration: 0.3,
+          ease: 'power2.out'
+        })
+      })
+    })
+
+    // Pulse animation for popular badge
+    gsap.to('.popular-badge', {
+      scale: 1.05,
+      duration: 1,
+      repeat: -1,
+      yoyo: true,
+      ease: 'power1.inOut'
+    })
+
+  }, { scope: sectionRef })
+
   return (
-    <section className="impact-section">
+    <section className="impact-section" ref={sectionRef}>
       <div className="impact-container">
-        <div className="impact-header">
+        <div className="impact-header" ref={headerRef}>
           <h2 className="impact-title">{t('impact.title')}</h2>
           <p className="impact-subtitle">{t('impact.subtitle')}</p>
         </div>
 
-        <div className="pricing-toggle">
+        <div className="pricing-toggle" ref={toggleRef}>
           <button
             className={`toggle-button ${billingCycle === 'monthly' ? 'active' : ''}`}
-            onClick={() => setBillingCycle('monthly')}
+            onClick={() => handleBillingToggle('monthly')}
           >
             Monthly
           </button>
           <button
             className={`toggle-button ${billingCycle === 'yearly' ? 'active' : ''}`}
-            onClick={() => setBillingCycle('yearly')}
+            onClick={() => handleBillingToggle('yearly')}
           >
             Yearly <span className="discount-badge">10% OFF</span>
           </button>
         </div>
-        
+
         <div className="impact-grid pricing-grid">
-          {plans.map((plan) => {
-            const displayPrice = billingCycle === 'yearly' 
-              ? `₹${calculateYearlyPrice(plan.monthlyPrice)}` 
+          {plans.map((plan, index) => {
+            const displayPrice = billingCycle === 'yearly'
+              ? `₹${calculateYearlyPrice(plan.monthlyPrice)}`
               : `₹${plan.monthlyPrice}`
             const displayUnit = plan.priceUnit // Always show "per call"
             return (
-              <div key={plan.key} className={`impact-card pricing-card ${plan.popular ? 'popular' : ''}`}>
+              <div
+                key={plan.key}
+                className={`impact-card pricing-card ${plan.popular ? 'popular' : ''}`}
+                ref={el => cardsRef.current[index] = el}
+              >
                 {plan.popular && (
                   <div className="popular-badge">Most Popular</div>
                 )}
