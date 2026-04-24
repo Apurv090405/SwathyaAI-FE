@@ -2,6 +2,7 @@ import { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useGSAP } from '@gsap/react'
 import { gsap, ScrollTrigger } from '../../utils/gsapConfig'
+import { Button } from '@/components/ui/button'
 import './ImpactSection.css'
 
 const ImpactSection = () => {
@@ -160,18 +161,22 @@ const ImpactSection = () => {
         </div>
 
         <div className="pricing-toggle" ref={toggleRef}>
-          <button
-            className={`toggle-button ${billingCycle === 'monthly' ? 'active' : ''}`}
+          <Button
+            type="button"
+            variant="ghost"
+            className={`toggle-button h-10 px-4 ${billingCycle === 'monthly' ? 'active' : ''}`}
             onClick={() => handleBillingToggle('monthly')}
           >
             Monthly
-          </button>
-          <button
-            className={`toggle-button ${billingCycle === 'yearly' ? 'active' : ''}`}
+          </Button>
+          <Button
+            type="button"
+            variant="ghost"
+            className={`toggle-button h-10 px-4 ${billingCycle === 'yearly' ? 'active' : ''}`}
             onClick={() => handleBillingToggle('yearly')}
           >
             Yearly <span className="discount-badge">10% OFF</span>
-          </button>
+          </Button>
         </div>
 
         <div className="impact-grid pricing-grid">
@@ -207,9 +212,9 @@ const ImpactSection = () => {
                     </div>
                   ))}
                 </div>
-                <a href="#signup" className="pricing-button">
-                  {plan.buttonText}
-                </a>
+                <Button asChild className="pricing-button h-10 w-full">
+                  <a href="/signup">{plan.buttonText}</a>
+                </Button>
               </div>
             )
           })}

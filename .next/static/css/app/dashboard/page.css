@@ -1,0 +1,300 @@
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[3]!./src/pages/Dashboard.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
+/* Foreground: main column uses text-foreground; sidebar uses muted chrome (see DashboardSidebar). */
+
+/* AI assistants: one fixed viewport block — no page scroll; scroll only inside agent list + messages. */
+.ai-assistants-panel {
+    /* Header + section padding + margins; larger subtract avoids body scroll when header wraps */
+    height: calc(100dvh - 13rem);
+    max-height: calc(100dvh - 13rem);
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.ai-assistants-inner-grid {
+    flex: 1 1 0;
+    min-height: 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    overflow: hidden;
+}
+
+@media (min-width: 1024px) {
+    .ai-assistants-inner-grid {
+        grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+        grid-template-rows: minmax(0, 1fr);
+        gap: 1.25rem;
+    }
+}
+
+/* AI assistants: lighter scrollbars so the split panel feels less “boxed”. */
+.ai-assistants-agent-scroll,
+.ai-assistants-chat-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground) / 0.25) transparent;
+}
+.ai-assistants-agent-scroll::-webkit-scrollbar,
+.ai-assistants-chat-scroll::-webkit-scrollbar {
+    width: 6px;
+}
+.ai-assistants-agent-scroll::-webkit-scrollbar-thumb,
+.ai-assistants-chat-scroll::-webkit-scrollbar-thumb {
+    border-radius: 9999px;
+    background: hsl(var(--muted-foreground) / 0.22);
+}
+.ai-assistants-agent-scroll::-webkit-scrollbar-track,
+.ai-assistants-chat-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[3]!./src/components/dashboard/dashboard.css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+/* Sticky sidebar: stays in view while main scrolls; no scroll inside sidebar */
+.dashboard-sidebar-sticky {
+    position: sticky;
+    top: 0;
+    align-self: flex-start;
+    max-height: 100vh;
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.dashboard-sidebar-inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+.dashboard-sidebar-nav {
+    flex: 1;
+    min-height: 0;
+    overflow: visible;
+    overscroll-behavior: none;
+}
+
+.dashboard-root {
+    min-height: 100vh;
+    background:
+        radial-gradient(circle at 15% 20%, hsl(var(--primary) / 0.12), transparent 30%),
+        radial-gradient(circle at 85% 80%, hsl(24 86% 63% / 0.12), transparent 30%),
+        hsl(var(--background));
+}
+
+.dashboard-hero {
+    background:
+        linear-gradient(140deg, hsl(var(--accent) / 0.8), hsl(var(--secondary) / 0.86)),
+        linear-gradient(220deg, rgba(255, 255, 255, 0.35), rgba(255, 255, 255, 0.05));
+}
+
+.dashboard-orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(2px);
+    opacity: 0.7;
+    animation: orbitFloat 8s ease-in-out infinite;
+}
+
+.dashboard-orb-1 {
+    width: 140px;
+    height: 140px;
+    background: hsl(16 100% 63% / 0.35);
+    right: -30px;
+    top: -34px;
+}
+
+.dashboard-orb-2 {
+    width: 180px;
+    height: 180px;
+    background: hsl(42 100% 67% / 0.28);
+    right: 20%;
+    bottom: -120px;
+    animation-delay: -2s;
+}
+
+.dashboard-gradient-border {
+    position: relative;
+}
+
+.dashboard-gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: 1.5rem;
+    background: linear-gradient(140deg, hsl(var(--primary) / 0.35), hsl(42 100% 62% / 0.25), transparent);
+    -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+}
+
+@keyframes orbitFloat {
+    0%,
+    100% {
+        transform: translateY(0) translateX(0);
+    }
+    50% {
+        transform: translateY(-8px) translateX(4px);
+    }
+}
+
+.dark .dashboard-hero {
+    background:
+        linear-gradient(145deg, hsl(var(--accent) / 0.28), hsl(var(--secondary) / 0.32)),
+        linear-gradient(220deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+}
+
+/* Main column scrolls; sidebar does not */
+.dashboard-main-scroll {
+    min-width: 0;
+}
+
+/* Calling agent — overview */
+.calling-agent-overview-shell {
+    border-radius: 1.25rem;
+    border: 1px solid hsl(var(--border) / 0.75);
+    background:
+        linear-gradient(165deg, hsl(var(--card) / 0.95), hsl(var(--muted) / 0.35)),
+        hsl(var(--card));
+    box-shadow: 0 1px 0 hsl(var(--border) / 0.4) inset;
+}
+
+.dark .calling-agent-overview-shell {
+    background:
+        linear-gradient(165deg, hsl(var(--card) / 0.92), hsl(20 14% 8% / 0.85)),
+        hsl(var(--card));
+    box-shadow: 0 1px 0 hsl(0 0% 100% / 0.06) inset;
+}
+
+.calling-agent-call-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.calling-agent-call-btn {
+    flex: 1;
+    min-width: 140px;
+    border-radius: 9999px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        border-color 0.15s ease,
+        background-color 0.15s ease;
+}
+
+.calling-agent-call-btn[data-active='true'] {
+    border-color: hsl(var(--primary));
+    background: hsl(var(--primary) / 0.14);
+    color: hsl(var(--primary));
+    box-shadow: 0 0 0 1px hsl(var(--primary) / 0.25);
+}
+
+.calling-agent-call-btn[data-active='false'] {
+    border-color: hsl(var(--border) / 0.9);
+    background: hsl(var(--background) / 0.5);
+}
+
+.calling-agent-call-btn:hover {
+    transform: translateY(-1px);
+}
+
+.calling-agent-metric-overview {
+    border-radius: 1rem;
+    border: 1px solid hsl(var(--border) / 0.65);
+    background: hsl(var(--muted) / 0.25);
+    padding: 1rem 1.125rem;
+}
+
+.dark .calling-agent-metric-overview {
+    background: hsl(var(--muted) / 0.2);
+}
+
+.calling-agent-saved-grid {
+    display: grid;
+    gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+    .calling-agent-saved-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.calling-agent-saved-tile {
+    border-radius: 0.875rem;
+    border: 1px solid hsl(var(--border) / 0.55);
+    background: hsl(var(--background) / 0.55);
+    padding: 0.75rem 1rem;
+}
+
+.dark .calling-agent-saved-tile {
+    background: hsl(20 14% 10% / 0.55);
+    border-color: hsl(var(--border) / 0.45);
+}
+
+.calling-agent-saved-tile dt {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: hsl(var(--muted-foreground));
+    margin-bottom: 0.35rem;
+}
+
+.calling-agent-saved-tile dd {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: hsl(var(--foreground));
+    word-break: break-word;
+}
+
+/* Knowledge & RAG dashboard */
+.knowledge-rag-panel .knowledge-rag-card {
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.knowledge-rag-panel .knowledge-rag-card:hover {
+    border-color: hsl(var(--primary) / 0.22);
+}
+
+/* Analytics & approvals — stable table shell when few rows (< one “full” page) */
+.analytics-approvals-table-wrap {
+    background: hsl(var(--card));
+    min-height: min(28rem, 55vh);
+}
+
+.call-history-table-wrap {
+    min-height: min(26rem, 52vh);
+}
+
+.phone-numbers-table-wrap {
+    min-height: min(20rem, 45vh);
+}
+
+.dark .analytics-approvals-table-wrap {
+    background: hsl(20 14% 9% / 0.92);
+}
+
+.analytics-approvals-table tbody tr:nth-child(even) {
+    background: hsl(var(--muted) / 0.25);
+}
+
+.dark .analytics-approvals-table tbody tr:nth-child(even) {
+    background: hsl(0 0% 100% / 0.03);
+}
+

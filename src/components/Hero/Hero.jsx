@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useGSAP } from '@gsap/react'
 import { gsap, ScrollTrigger } from '../../utils/gsapConfig'
+import { Button } from '@/components/ui/button'
 import './Hero.css'
 
 const Hero = () => {
@@ -54,12 +55,12 @@ const Hero = () => {
           <h1 className="hero-title" ref={titleRef}>{t('hero.title')}</h1>
           <p className="hero-subtitle" ref={subtitleRef}>{t('hero.subtitle')}</p>
           <div className="hero-cta" ref={ctaRef}>
-            <a href="#get-started" className="btn btn-primary">
-              {t('hero.cta1')}
-            </a>
-            <a href="#learn-more" className="btn btn-secondary">
-              {t('hero.cta2')}
-            </a>
+            <Button asChild className="btn shadow-md">
+              <a href="#get-started">{t('hero.cta1')}</a>
+            </Button>
+            <Button asChild variant="outline" className="btn bg-background/80 backdrop-blur-sm">
+              <a href="#learn-more">{t('hero.cta2')}</a>
+            </Button>
           </div>
         </div>
       </div>

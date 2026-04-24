@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useGSAP } from '@gsap/react'
 import { gsap, ScrollTrigger } from '../../utils/gsapConfig'
+import { Button } from '@/components/ui/button'
 import './ValueProposition.css'
 
 const ValueProposition = () => {
@@ -86,9 +87,9 @@ const ValueProposition = () => {
             <p className="value-prop-subtitle">
               {t('valueProp.subtitle')}
             </p>
-            <a href="#learn-more" className="value-prop-button">
-              {t('valueProp.button')}
-            </a>
+            <Button asChild className="value-prop-button h-10 px-6">
+              <a href="#learn-more">{t('valueProp.button')}</a>
+            </Button>
             <div className="value-prop-pattern" ref={patternRef}>
               <span className="pattern-item">XIX</span>
               <span className="pattern-item">XIX</span>

@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useGSAP } from '@gsap/react'
 import { gsap, ScrollTrigger } from '../../utils/gsapConfig'
@@ -10,7 +10,6 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [activeDropdown, setActiveDropdown] = useState(null)
   const headerRef = useRef(null)
-  const lastScrollY = useRef(0)
 
   const handleDropdownToggle = (dropdown) => {
     setActiveDropdown(activeDropdown === dropdown ? null : dropdown)
@@ -35,42 +34,6 @@ const Header = () => {
     )
 
   }, { scope: headerRef })
-
-  // Smart header hide/show on scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY
-      const header = headerRef.current
-
-      if (currentScrollY > lastScrollY.current && currentScrollY > 100) {
-        // Scrolling down - hide header
-        gsap.to(header, {
-          y: -100,
-          duration: 0.3,
-          ease: 'power2.out'
-        })
-      } else {
-        // Scrolling up - show header
-        gsap.to(header, {
-          y: 0,
-          duration: 0.3,
-          ease: 'power2.out'
-        })
-      }
-
-      // Add shadow when scrolled
-      if (currentScrollY > 50) {
-        header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.1)'
-      } else {
-        header.style.boxShadow = 'none'
-      }
-
-      lastScrollY.current = currentScrollY
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
 
   return (
     <header className="header" ref={headerRef}>
@@ -140,7 +103,7 @@ const Header = () => {
 
             <LanguageSwitcher />
 
-            <a href="#signin" className="nav-link nav-link-login">
+            <a href="/signin" className="nav-link nav-link-login">
               Login
             </a>
 

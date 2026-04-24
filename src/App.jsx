@@ -1,31 +1,38 @@
-import React, { useState, useEffect } from 'react'
-import HomePage from './pages/HomePage'
-import AuthPage from './pages/AuthPage'
-import Dashboard from './pages/Dashboard'
+import React, { useState, useEffect, useCallback } from 'react'
+import HomePage from './views/HomePage'
+import AuthPage from './views/AuthPage'
+import Dashboard from './views/Dashboard'
+import { useAuth } from './context/AuthContext.jsx'
 import './styles/App.css'
 
 function App() {
+  const { session, initialized } = useAuth()
   const [currentPage, setCurrentPage] = useState('home')
 
-  useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash
-      if (hash === '#signin' || hash === '#signup') {
-        setCurrentPage('auth')
-      } else if (hash === '#dashboard') {
-        setCurrentPage('dashboard')
-      } else {
-        setCurrentPage('home')
-      }
+  const syncRouteFromHash = useCallback(() => {
+    const hash = window.location.hash
+    if (hash === '#signin' || hash === '#signup') {
+      setCurrentPage('auth')
+    } else if (hash === '#dashboard') {
+      setCurrentPage('dashboard')
+    } else {
+      setCurrentPage('home')
     }
-
-    // Check initial hash
-    handleHashChange()
-
-    // Listen for hash changes
-    window.addEventListener('hashchange', handleHashChange)
-    return () => window.removeEventListener('hashchange', handleHashChange)
   }, [])
+
+  useEffect(() => {
+    syncRouteFromHash()
+    window.addEventListener('hashchange', syncRouteFromHash)
+    return () => window.removeEventListener('hashchange', syncRouteFromHash)
+  }, [syncRouteFromHash])
+
+  if (!initialized) {
+    return (
+      <div className="app-loading">
+        <p>Loading…</p>
+      </div>
+    )
+  }
 
   const renderPage = () => {
     switch (currentPage) {
@@ -38,12 +45,7 @@ function App() {
     }
   }
 
-  return (
-    <div className="App">
-      {renderPage()}
-    </div>
-  )
+  return <div className="App">{renderPage()}</div>
 }
 
 export default App
-

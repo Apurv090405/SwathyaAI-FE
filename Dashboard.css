@@ -1,0 +1,16 @@
+
+/** SVG Chart Animations */
+@keyframes dash {
+    from { stroke-dashoffset: 226; }
+}
+
+circle.transition-all {
+    animation: dash 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Metric Card Glass Effect */
+.metric-glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}

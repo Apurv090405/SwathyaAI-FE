@@ -2,6 +2,7 @@ import React, { useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useGSAP } from '@gsap/react'
 import { gsap, ScrollTrigger } from '../../utils/gsapConfig'
+import { Button } from '@/components/ui/button'
 import './CTASection.css'
 
 const CTASection = () => {
@@ -60,9 +61,9 @@ const CTASection = () => {
         <div className="cta-content" ref={contentRef}>
           <h2 className="cta-title">{t('cta.title')}</h2>
           <p className="cta-subtitle">{t('cta.subtitle')}</p>
-          <a href="#get-started" className="btn btn-cta" ref={buttonRef}>
-            {t('cta.button')}
-          </a>
+          <Button asChild ref={buttonRef} className="btn btn-cta h-11 px-8 text-base shadow-lg">
+            <a href="#get-started">{t('cta.button')}</a>
+          </Button>
         </div>
       </div>
     </section>

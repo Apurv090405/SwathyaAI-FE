@@ -1,0 +1,9 @@
+version: "2"
+authtoken: 32XYiAaAGxj5CIQKt7T779FLNPC_57EA5Ddk9WeLsr3ut6DGt
+tunnels:
+  app1:
+    proto: http
+    addr: 8000
+  app2:
+    proto: http
+    addr: 8001
